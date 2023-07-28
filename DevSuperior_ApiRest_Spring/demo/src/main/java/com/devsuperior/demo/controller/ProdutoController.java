@@ -1,14 +1,18 @@
 package com.devsuperior.demo.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.devsuperior.demo.entities.Departamento;
 import com.devsuperior.demo.entities.Produto;
+import com.devsuperior.demo.repository.ProdutoRepository;
 
 //endpoint , caminho da aplicação
 //controlador 
@@ -16,19 +20,21 @@ import com.devsuperior.demo.entities.Produto;
 @RestController
 @RequestMapping("/produtos")
 public class ProdutoController {
-	
-	//serialização , objeto de retorno transformado em JSON 
+
+	@Autowired
+	private ProdutoRepository produtoRepository;
+
+	// serialização , objeto de retorno transformado em JSON
 	@GetMapping
 	public List<Produto> getObjects() {
-		Departamento d1 = new Departamento(1L, "tech");
-		Departamento d2 = new Departamento(2L, "pet");
-		
-		Produto p1 = new Produto(1L, "Macbook Pro" , 4000.0, d1);
-		Produto p2 = new Produto(2L, "Notebook Gamer" , 5000.0, d1);
-		Produto p3 = new Produto(3L, "pet House" , 300.0, d2);
-		
-		List<Produto> list = Arrays.asList(p1,p2,p3);
-		
-		return list;
+		return produtoRepository.findAll();
 	}
+	
+	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
+	public Produto setObjects(@RequestBody Produto produto) {
+		return produtoRepository.save(produto);
+	}
+	
+	
 }
