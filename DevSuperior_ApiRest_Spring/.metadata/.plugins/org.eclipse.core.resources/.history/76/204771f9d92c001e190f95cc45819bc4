@@ -1,0 +1,7 @@
+package com.devsuperior.demo.entities;
+
+public class Departamento {
+	
+	private Long Id;
+	private String name;
+}

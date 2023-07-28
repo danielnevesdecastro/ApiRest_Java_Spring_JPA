@@ -1,0 +1,26 @@
+package com.devsuperior.demo.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.devsuperior.demo.entities.Departamento;
+import com.devsuperior.demo.entities.Produto;
+
+//endpoint , caminho da aplicação
+//controlador 
+
+@RestController
+@RequestMapping("/produtos")
+public class ProdutoController {
+	
+	//serialização , objeto de retorno transformado em JSON 
+	@GetMapping
+	public Departamento getObjects() {
+		Departamento d1 = new Departamento(1L, "tech");
+		Departamento d2 = new Departamento(2L, "pet");
+		
+		Produto p1 = new Produto(1L, "Marbook Pro" , 4000.0, d1);
+		return d1;
+	}
+}
